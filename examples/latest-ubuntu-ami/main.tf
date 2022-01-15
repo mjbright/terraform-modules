@@ -13,7 +13,8 @@ variable ami_instance {
 }
 
 module "latest-ubuntu-ami" {
-    source = "./latest-ubuntu-ami"
+    #source = "../../modules/latest-ubuntu-ami"
+    source = "git::https://github.com/mjbright/terraform-modules//modules/latest-ubuntu-ami"
     region = var.region
 }
 
