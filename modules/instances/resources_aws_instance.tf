@@ -27,18 +27,18 @@ resource "aws_instance" "example" {
     host        = "${self.public_ip}"
   }
 
+    //var.provisioner_templatefile="templates/webserver.sh.tpl"
   provisioner "file" {
     #source     = "webserver.sh"
-    content     = templatefile("templates/webserver.sh.tpl", {
+    content     = ( var.provisioner_templatefile == "" ? "" : templatefile(var.provisioner_templatefile, {
       web_port  = var.ingress_ports["web"]
     })
+    )
     destination = "/tmp/webserver.sh"
   }
 
   provisioner "remote-exec" {
-    inline      = [
-      "touch /tmp/ON_remote_HOST; hostname; echo 'This code executes on the remote resource, (IP address is ${self.public_ip})'; chmod a+x /tmp/webserver.sh; sh -x /tmp/webserver.sh"
-    ]
+    inline     = ( var.provisioner_templatefile == "" ? [] : [ "touch /tmp/ON_remote_HOST; hostname; echo 'This code executes on the remote resource, (IP address is ${self.public_ip})'; chmod a+x /tmp/webserver.sh; sh -x /tmp/webserver.sh" ] )
   }
 
   vpc_security_group_ids = [aws_security_group.secgroup-ssh.id] 
