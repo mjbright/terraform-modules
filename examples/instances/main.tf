@@ -5,7 +5,7 @@ module "instances" {
     # - a sub-directory /modules/instances
     # - a specific commit (ref=sha256)
     #source        = "git::https://github.com/mjbright/terraform-modules.git//modules/instances?ref=af0bad34446e2534245c52f527d23d0de4392fdb"
-    source        = "./modules/instances"
+    source        = "../../modules/instances"
 
     # input parameters:
     num_instances = 1
