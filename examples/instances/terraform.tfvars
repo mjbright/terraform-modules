@@ -13,8 +13,10 @@ egress_ports = {
 }
 
 # DNS Domain info:
+#domain             = "mjbright.click"
+#host               = "instance-test"
 domain             = "YOUR-DOMAIN.NET"
-host               = "quiz"
+host               = "INSTANCE-NAME"
 zone_id            = ""
 
 # user data:

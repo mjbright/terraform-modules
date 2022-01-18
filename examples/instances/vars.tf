@@ -23,6 +23,11 @@ variable egress_ports {
   type = map(number)
 }
 
+variable host {
+  description = "DNS host name"
+  type        = string
+}
+
 variable domain {
   description = "DNS domain name"
   type        = string
@@ -37,3 +42,9 @@ variable user_data_filepath {
   description = "Optional path to user_data for VM provisioning"
   type        = string
 }
+
+variable provisioner_templatefile {
+  description = "Optional path to provisioner_templatefile for file cp, then execution"
+  type        = string
+}
+
