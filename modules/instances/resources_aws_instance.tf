@@ -1,8 +1,8 @@
 
-resource "aws_instance" "example" {
+resource "aws_instance" "instances" {
   count         = var.num_instances
 
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   ami           = data.aws_ami.latest_ubuntu_lts_1804.id
 
   # Don't auto-recreate instance if new ami available:
@@ -26,19 +26,24 @@ resource "aws_instance" "example" {
     #host       = "${var.host}"
     host        = "${self.public_ip}"
   }
+   
+  provisioner "file" {
+    source      = ( var.zip_file == "" ? "/dev/null"  : var.zip_file )
+    destination = ( var.zip_file == "" ? "/tmp/.null" : "/tmp/files.zip" )
+  }
 
     //var.provisioner_templatefile="templates/webserver.sh.tpl"
   provisioner "file" {
     #source     = "webserver.sh"
     content     = ( var.provisioner_templatefile == "" ? "" : templatefile(var.provisioner_templatefile, {
-      web_port  = var.ingress_ports["web"]
+      web_port  = var.pub_ingress_ports["web"][0]
     })
     )
-    destination = "/tmp/webserver.sh"
+    destination = "/tmp/remote-exec.sh"
   }
 
   provisioner "remote-exec" {
-    inline     = ( var.provisioner_templatefile == "" ? [] : [ "touch /tmp/ON_remote_HOST; hostname; echo 'This code executes on the remote resource, (IP address is ${self.public_ip})'; chmod a+x /tmp/webserver.sh; sh -x /tmp/webserver.sh" ] )
+    inline     = ( var.provisioner_templatefile == "" ? [] : [ "touch /tmp/ON_remote_HOST; hostname; echo 'This code executes on the remote resource, (IP address is ${self.public_ip})'; chmod a+x /tmp/remote-exec.sh; sh -x /tmp/remote-exec.sh" ] )
   }
 
   vpc_security_group_ids = [aws_security_group.secgroup-ssh.id] 
@@ -61,7 +66,7 @@ resource "aws_instance" "example" {
 
   #user_data = file( var.user_data_filepath )
 
-  user_data = var.user_data_filepath == "" ? "" : file( var.user_data_filepath )
+  user_data = var.user_data_file == "" ? "" : file( var.user_data_file )
 }
 
 resource "random_id" "sec_group" {
@@ -72,12 +77,13 @@ resource "aws_security_group" "secgroup-ssh" {
   name        = "secgroup-${random_id.sec_group.id}"
 
   dynamic "ingress" {
-    for_each = var.ingress_ports
+    for_each = var.pub_ingress_ports
 
     content {
-      description = "Port ${ingress.key}: ${ingress.value}"
-      from_port   = ingress.value
-      to_port     = ingress.value
+      #description = "[pub] Port ${ingress.key}: ${ingress.value[0]}-${ingress.value[1]}"
+      description = "[pub] Port ${ingress.key}"
+      from_port   = ingress.value[0]
+      to_port     = ingress.value[1]
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
@@ -87,12 +93,30 @@ resource "aws_security_group" "secgroup-ssh" {
     for_each = var.egress_ports
 
     content {
-      description = "Port ${egress.key}: ${egress.value}"
-      from_port   = egress.value
-      to_port     = egress.value
+      #description = "Port ${egress.key}: ${ingress.value[0]}-${ingress.value[1]}"
+      description = "Port ${egress.key}"
+      from_port   = egress.value[0]
+      to_port     = egress.value[1]
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
   }
+
+   ingress {
+        # ingress { # Enable ALL protocols/ports between cluster nodes on their internal ips: }
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = var.vpc_cidr
+    }
+
+   egress {
+        # egress { # Enable ALL protocols/ports between cluster nodes on their internal ips: }
+        from_port = 0
+        to_port     = 0
+        protocol  = "-1"
+        cidr_blocks = var.vpc_cidr
+    }
+
 }
 
