@@ -1,2 +1,4 @@
 **/terraform.tfstate*
 **/.terraform.lock.hcl
+terraform.tfvars.mjbright.click
+TF_apply.sh
