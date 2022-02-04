@@ -9,18 +9,28 @@ variable user {
  
 }
 
+variable nodes {
+  description = "Number of VMs"
+  default     = 1
+}
+
 locals {
   canonical_account_number = "099720109477"
 }
 
-variable ingress_ports {
-  description = "Ingress Ports"
-  type = map(number)
+variable pub_ingress_ports {
+  description = "Public Ingress Ports"
+  type        = map(list(number))
+}
+
+variable vpc_ingress_ports {
+  description = "VPC Ingress Ports"
+  type        = map(list(number))
 }
 
 variable egress_ports {
   description = "Egress Ports"
-  type = map(number)
+  type        = map(list(number))
 }
 
 variable host {
@@ -38,7 +48,7 @@ variable zone_id {
   type        = string
 }
 
-variable user_data_filepath {
+variable user_data_file {
   description = "Optional path to user_data for VM provisioning"
   type        = string
 }
@@ -48,3 +58,11 @@ variable provisioner_templatefile {
   type        = string
 }
 
+variable files_to_transfer {
+  type        = list(string)
+}
+
+variable zip_file {
+  type        = string
+  default     = "/dev/null"
+}

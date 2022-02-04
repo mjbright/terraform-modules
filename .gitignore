@@ -2,3 +2,6 @@
 **/.terraform.lock.hcl
 terraform.tfvars.mjbright.click
 TF_apply.sh
+files/*TMP*
+files/*.zip
+*.pem

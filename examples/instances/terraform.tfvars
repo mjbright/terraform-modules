@@ -1,28 +1,37 @@
 
 key_file = "key.pem"
 
-ingress_ports = {
-    "ssh":     22, # Enable incoming ssh         connection
-    "web"  : 8080, # Enable incoming web-server  connection
-    "flask": 3000  # Enable incoming flask(quiz) connection
+pub_ingress_ports = {
+    "ssh":            [22,22], # Enable incoming ssh         connection
+    "web"  :      [8080,8080], # Enable incoming web-server  connection
+    "flask":      [3000,3000]  # Enable incoming flask(quiz) connection
+    "high"  :   [30000,32767], # Enable incoming connections to high-numbered ports
+}
+
+vpc_ingress_ports = {
+    "":             [0,0]
 }
 
 egress_ports = {
-    "http":   80, # Enable outgoing http  connections
-    "https": 443  # Enable outgoing https connections
+    "http":    [80,80], # Enable outgoing http  connections
+    "https": [443,443]  # Enable outgoing https connections
 }
 
 # DNS Domain info:
-#domain             = "mjbright.click"
-#host               = "instance-test"
-domain             = "YOUR-DOMAIN.NET"
+#domain             = "YOUR-DOMAIN.NET"
+domain             = "mjbright.click"
 host               = "INSTANCE-NAME"
 zone_id            = ""
 
 # user data:
-user_data_filepath = "user_data_setup.sh"
+user_data_file = "user_data_setup.sh"
 
 # remote_exec/file provisioners:
-provisioner_templatefile = ""
+provisioner_templatefile = "/dev/null"
 
+files_to_transfer = [
+  "/etc/hosts", "/etc/lsb-release",
+]
+
+zip_file = "files/files.zip"
 
