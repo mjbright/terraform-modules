@@ -18,7 +18,7 @@ variable volume_type {
 variable ami {
   description = "Specific AMI to use"
   type        = string
-  default     = "ubuntu_2004"
+  default     = ""
 }
 
 variable ami_family {
