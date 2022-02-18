@@ -1,7 +1,8 @@
 
 module "lookup-ami" {
-  source     = "../../modules/data-aws-ami"
-  #source    = "git::https://github.com/mjbright/terraform-modules//modules/data-aws-ami"
+  #source     = "../../modules/data-aws-ami"
+  #source    = "git::https://github.com/mjbright/terraform-modules//modules/data-aws-ami?ref=3814cdf1a03a91a28b468688823387397b261566"
+  source    = "git::https://github.com/mjbright/terraform-modules//modules/data-aws-ami?ref=v0.4"
 
   ami_family = var.ami_family
 }
@@ -48,5 +49,4 @@ resource "local_file" "key_local_file" {
   filename        = var.key_file
   file_permission = 0600
 }
-
 
