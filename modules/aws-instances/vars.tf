@@ -1,7 +1,36 @@
 
-variable ami_account {
-  description = "AWS account to search for images"
+variable tags {
+  description = "Tags to apply to AWS resources"
+  default     = {}
+  type        = map(string)
+}
+
+variable volume_size {
+  description = "Root volume size in GB"
+  default     = 8
+}
+
+variable volume_type {
+  description = "Root volume type"
+  default     = "gp3"
+}
+
+variable ami {
+  description = "Specific AMI to use"
   type        = string
+  default     = "ubuntu_2004"
+}
+
+variable ami_family {
+  description = "AMI family to search for images in data provider - ignored if ami set"
+  type        = string
+  default     = "ubuntu_2004"
+}
+
+variable set_hostnames {
+  description = "AMI version to search for images"
+  type        = string
+  default     = false
 }
 
 variable instance_type {
@@ -27,6 +56,20 @@ variable key_file {
   type = string
 }
 
+variable intra_key_file {
+  description = "Path to existing PEM intra cluster key file - to transfer to cluster"
+  type = string
+}
+
+variable intra_pub_key_file {
+  description = "Path to existing public intra cluster key file - for aws_key_pair"
+  type = string
+}
+
+#variable intra_pub_key_local_file {
+  #type = any
+#}
+
 variable user {
   description = "Login user"
   type        = string
@@ -37,7 +80,6 @@ variable pub_ingress_ports {
   description = "Public Ingress Ports"
   type        = map(list(number))
 }
-
 variable vpc_ingress_ports {
   description = "Private Ingress Ports [within VPC]"
   type        = map(list(number))
@@ -80,6 +122,6 @@ variable provisioner_templatefile {
   type        = string
 }
 
-variable zip_file {
-  type        = string
+variable zip_files {
+  type        = list(string)
 }

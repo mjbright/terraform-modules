@@ -1,8 +1,6 @@
 
-// output "VM_fqdns" { value = [ for index, fqdn in module.instances.fqdn.* : fqdn ] }
-
 locals {
-  fqdns = [ for index, fqdn in module.instances.fqdn.* : fqdn ]
+  fqdns = [ for index, fqdns in module.instances.fqdns.* : fqdns ]
 }
 
 

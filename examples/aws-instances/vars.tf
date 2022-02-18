@@ -6,16 +6,21 @@ variable key_file {
 variable user {
   description = "Login user"
   default     = "ubuntu"
- 
+}
+
+variable ami_family {
+  description = "AMI family to search for AWS images - ignored if var.ami is set"
+  default     = "ubuntu_2004"
+}
+
+variable ami {
+  description = "Specific AMI to use"
+  default     = ""
 }
 
 variable nodes {
   description = "Number of VMs"
   default     = 1
-}
-
-locals {
-  canonical_account_number = "099720109477"
 }
 
 variable pub_ingress_ports {
@@ -62,7 +67,19 @@ variable files_to_transfer {
   type        = list(string)
 }
 
-variable zip_file {
-  type        = string
-  default     = "/dev/null"
+variable zip_files {
+  type        = list(string)
+  default     = ["/dev/null"]
 }
+
+variable intra_pub_key_file {
+  description = "optional: public key file to provide for connection between cluster nodes within a group"
+  default     = ""
+}
+
+variable intra_key_file {
+  description = "optional: provided key file to provide for connection between cluster nodes within a group"
+  default     = ""
+}
+
+

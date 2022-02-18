@@ -1,4 +1,10 @@
 
+# NOTE: Resources in this file are created only if
+# - number of instances is non-zero
+
+# Create DNS entries in AWS Route53 service
+# - for all nodes (in the specified domain)
+
 data "aws_route53_zone" "zone" {
    count   = ( var.domain == "" ? 0 :  var.num_instances )
 

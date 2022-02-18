@@ -33,5 +33,11 @@ files_to_transfer = [
   "/etc/hosts", "/etc/lsb-release",
 ]
 
-zip_file = "files/files.zip"
+zip_files = [ "files/files.zip" ]
+
+intra_pub_key_file = ""
+intra_key_file = ""
+
+ami_family = "ubuntu_2004"
+#ami = "ami-08fa7c8891945eae4"
 
