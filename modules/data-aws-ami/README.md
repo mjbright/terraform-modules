@@ -5,8 +5,8 @@ The module only interrogates the data.aws_ami data source for the specified fami
 
 The selected ami is returned as an output from the module.
 
-Refer to [examples/data-aws-ami](tree/master/examples/data-aws-ami) for example usage
-and [examples/data-aws-ami/TEST_module](tree/master/examples/data-aws-ami/TEST_module) for a simple test config
+Refer to [examples/data-aws-ami](/mjbright/terraform-modules/tree/master/examples/data-aws-ami) for example usage
+and [examples/data-aws-ami/TEST_module](/mjbright/terraform-modules/tree/master/examples/data-aws-ami/TEST_module) for a simple test config
 
 Currently supports:
 - x86_64 architecture
