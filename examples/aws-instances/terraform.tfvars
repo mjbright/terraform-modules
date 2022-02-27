@@ -18,8 +18,7 @@ egress_ports = {
 }
 
 # DNS Domain info:
-#domain             = "YOUR-DOMAIN.NET"
-domain             = "mjbright.click"
+domain             = "YOUR-DOMAIN.NET"
 host               = "INSTANCE-NAME"
 zone_id            = ""
 

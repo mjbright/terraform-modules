@@ -3,14 +3,20 @@
 # - number of groups is non-zero
 # - number of instances is non-zero (for aws_instance)
 
+module "data_aws_ams" {
+  source = "../data-aws-ami"
+  #source        = "git::https://github.com/mjbright/terraform-modules.git//modules/data-aws-ami?ref=v0.6"
+
+  ami_family = var.ami_family
+}
+
 resource "aws_instance" "instances" {
   count         = var.num_instances
 
   instance_type = var.instance_type
 
   # Lookup latest image for var.ami_family, else local.default_ami_family:
-  ami = ( var.ami == "" ?
-    lookup( local.ami_families, var.ami_family, local.default_ami_family ) : var.ami )
+  ami = ( var.ami == "" ? module.data_aws_ams.ami : var.ami )
 
   # Don't auto-recreate instance if new ami available:
   lifecycle {
