@@ -5,6 +5,7 @@ TF_apply.sh
 files/*TMP*
 files/*.zip
 *.pem
+*.ppk
 *.OK/
 NOTES.md
 **/files.zip
