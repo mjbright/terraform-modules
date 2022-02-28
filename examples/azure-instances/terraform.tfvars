@@ -1,5 +1,6 @@
 
-key_file = "key.pem"
+key_file     = "key.pem"
+key_ppk_file = "key.ppk"
 
 region   = "westus"
 
