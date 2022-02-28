@@ -3,6 +3,10 @@ variable key_file {
   description = "Path to generated PEM key file"
 }
 
+variable key_ppk_file {
+    default = "key.ppk"
+}
+
 variable user {
   description = "Login user"
   default     = "ubuntu"

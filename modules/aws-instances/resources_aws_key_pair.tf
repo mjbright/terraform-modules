@@ -42,6 +42,13 @@ resource "local_file" "key_local_file" {
   file_permission = 0600
 }
 
+resource "local_file" "key_local_ppk_file" {
+  content         = data.tls_public_key.ppk.private_key_pem
+  filename        = var.key_ppk_file
+  file_permission = 0600
+}
+
+
 # Intra-node key_pair ----------------------------------------
 
 resource "aws_key_pair" "intra_key" {

@@ -17,6 +17,7 @@ module "aws-instances" {
 
     #key_pair         = ""
     key_file          = var.key_file
+    key_ppk_file      = var.key_ppk_file
     intra_pub_key_file = ""
     intra_key_file    = ""
 
