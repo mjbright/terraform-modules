@@ -42,8 +42,19 @@ resource "local_file" "key_local_file" {
   file_permission = 0600
 }
 
+data "tls_public_key" "ppk" {
+  count           = ( var.num_groups > 0 ? 1 : 0 )
+
+#  depends_on = [ local_file.key_local_ppk_file ]
+#
+  private_key_pem = tls_private_key.tlskey[ count.index ].private_key_pem
+}
+
+# File to save .ppk key to:
 resource "local_file" "key_local_ppk_file" {
-  content         = data.tls_public_key.ppk.private_key_pem
+  count           = ( var.num_groups > 0 ? 1 : 0 )
+
+  content         = data.tls_public_key.ppk[ count.index ].private_key_pem
   filename        = var.key_ppk_file
   file_permission = 0600
 }

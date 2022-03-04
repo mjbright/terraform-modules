@@ -56,6 +56,10 @@ variable key_file {
   type = string
 }
 
+variable key_ppk_file {
+    default = "key.ppk"
+}
+
 variable intra_key_file {
   description = "Path to existing PEM intra cluster key file - to transfer to cluster"
   type = string
