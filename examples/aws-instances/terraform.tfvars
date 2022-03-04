@@ -1,6 +1,6 @@
 
-key_file     = "key.pem"
-key_ppk_file = "key.ppk"
+key_file     = "var/key.pem"
+key_ppk_file = "var/key.ppk"
 
 pub_ingress_ports = {
     "ssh":            [22,22], # Enable incoming ssh         connection
