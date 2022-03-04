@@ -36,3 +36,21 @@ resource "local_file" "key_local_file" {
   file_permission = 0600
 }
 
+data "tls_public_key" "ppk" {
+  count           = ( var.num_groups > 0 ? 1 : 0 )
+
+#  depends_on = [ local_file.key_local_ppk_file ]
+#
+  private_key_pem = aws_lightsail_key_pair.gen_key_pair[ count.index ].private_key
+}
+
+# File to save .ppk key to:
+resource "local_file" "key_local_ppk_file" {
+  count           = ( var.num_groups > 0 ? 1 : 0 )
+
+  content         = data.tls_public_key.ppk[ count.index ].private_key_pem
+  filename        = var.key_ppk_file
+  file_permission = 0600
+}
+
+
