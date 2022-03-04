@@ -5,8 +5,8 @@ module "aws-instances" {
     # - a sub-directory /modules/instances
     # - a specific commit (ref=sha256)
     #source        = "git::https://github.com/mjbright/terraform-modules.git//modules/aws-instances?ref=af0bad34446e2534245c52f527d23d0de4392fdb"
-    source        = "../../modules/aws-instances"
-    #source        = "git::https://github.com/mjbright/terraform-modules.git//modules/aws-instances?ref=v0.6"
+    #source        = "../../modules/aws-instances"
+    source        = "git::https://github.com/mjbright/terraform-modules.git//modules/aws-instances?ref=v0.9.2"
 
     # input parameters:
     num_instances     = var.nodes

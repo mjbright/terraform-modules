@@ -4,8 +4,8 @@
 # - number of instances is non-zero (for aws_instance)
 
 module "data_aws_ams" {
-  source = "../data-aws-ami"
-  #source        = "git::https://github.com/mjbright/terraform-modules.git//modules/data-aws-ami?ref=v0.6"
+  #source = "../data-aws-ami"
+  source        = "git::https://github.com/mjbright/terraform-modules.git//modules/data-aws-ami?ref=v0.9.2"
 
   ami_family = var.ami_family
 }
