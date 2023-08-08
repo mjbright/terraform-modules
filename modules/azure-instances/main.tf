@@ -1,13 +1,14 @@
 
-resource "azurerm_resource_group" "rg" {
-  name     = "${var.prefix}-rg"
-  location = var.location
-}
+#resource "azurerm_resource_group" "rg" {
+#  name     = "${var.prefix}-rg"
+#  location = var.location
+#}
 
 resource "azurerm_public_ip" "public_ip" {
   name                = "${var.prefix}-pubip"
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  #resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group
   allocation_method   = "Dynamic"
   domain_name_label   = var.dns_name
 }
