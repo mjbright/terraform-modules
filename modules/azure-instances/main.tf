@@ -6,8 +6,8 @@
 
 resource "azurerm_public_ip" "public_ip" {
   name                = "${var.prefix}-pubip"
-  location            = var.location
   #resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
   resource_group_name = var.resource_group
   allocation_method   = "Dynamic"
   domain_name_label   = var.dns_name
@@ -16,13 +16,14 @@ resource "azurerm_public_ip" "public_ip" {
 resource "azurerm_virtual_network" "main" {
   name                = "${var.prefix}-network"
   address_space       = [ var.net_cidr ]
-  location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
 }
 
 resource "azurerm_subnet" "private-subnet" {
   name                 = "private"
   resource_group_name  = azurerm_resource_group.rg.name
+  location            = var.location
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [ var.subnet_cidr ]
 }
@@ -30,7 +31,7 @@ resource "azurerm_subnet" "private-subnet" {
 resource "azurerm_network_interface" "main" {
   name                = "${var.prefix}-nic"
   resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  location            = var.location
 
   ip_configuration {
     name                          = "${var.prefix}-ipconfig"
@@ -43,7 +44,7 @@ resource "azurerm_network_interface" "main" {
 resource "azurerm_linux_virtual_machine" "main" {
   name                            = "${var.prefix}-vm"
   resource_group_name             = azurerm_resource_group.rg.name
-  location                        = azurerm_resource_group.rg.location
+  location            = var.location
   size                            = var.vm_size
 
   # Seem to be ignored:
@@ -100,6 +101,5 @@ resource "azurerm_linux_virtual_machine" "main" {
       ]
     )
   }
-
 }
 
