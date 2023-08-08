@@ -3,6 +3,10 @@ variable location {
   description = "The Azure Region to use"
 }
 
+variable resource_group {
+  description = "Existing resource group name"
+}
+
 variable vm_size {
   # See https://azure.microsoft.com/en-us/pricing/vm-selector/
   description = "The Azure Region to use"
