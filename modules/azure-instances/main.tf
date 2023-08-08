@@ -23,7 +23,6 @@ resource "azurerm_virtual_network" "main" {
 resource "azurerm_subnet" "private-subnet" {
   name                 = "private"
   resource_group_name = var.resource_group
-  location            = var.location
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [ var.subnet_cidr ]
 }
