@@ -16,13 +16,13 @@ resource "azurerm_public_ip" "public_ip" {
 resource "azurerm_virtual_network" "main" {
   name                = "${var.prefix}-network"
   address_space       = [ var.net_cidr ]
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group
   location            = var.location
 }
 
 resource "azurerm_subnet" "private-subnet" {
   name                 = "private"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group
   location            = var.location
   virtual_network_name = azurerm_virtual_network.main.name
   address_prefixes     = [ var.subnet_cidr ]
@@ -30,7 +30,7 @@ resource "azurerm_subnet" "private-subnet" {
 
 resource "azurerm_network_interface" "main" {
   name                = "${var.prefix}-nic"
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group
   location            = var.location
 
   ip_configuration {
@@ -43,7 +43,7 @@ resource "azurerm_network_interface" "main" {
 
 resource "azurerm_linux_virtual_machine" "main" {
   name                            = "${var.prefix}-vm"
-  resource_group_name             = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group
   location            = var.location
   size                            = var.vm_size
 
