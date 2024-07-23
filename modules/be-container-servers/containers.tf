@@ -20,6 +20,8 @@ resource docker_container c {
   name     = "${ var.container_name_prefix }${ count.index }"
   hostname = "${ var.container_name_prefix }${ count.index }"
 
+  depends_on = [ docker_network.app_network ]
+
   dynamic networks_advanced {
     for_each = ( var.network_name == null ? {} : { "${ var.network_name }": true } )
     #for_each = toset( var.test )
