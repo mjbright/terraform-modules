@@ -10,8 +10,8 @@ resource "docker_image" "haproxy" {
 
 resource "docker_container" "lb" {
   image     = docker_image.haproxy.image_id
-  name      = "lb"
-  hostname  = "lb"
+  name      = var.container_name
+  hostname  = var.container_name
 
   # Wait for haproxy.cfg to be created before creating this container:
   depends_on = [ local_file.haproxy_cfg ]
